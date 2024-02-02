@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset = "utf-8"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <title>Roman Numeral Converter</title>
+      <style>
+        body{
+        background-color: #1b1b32;
+         }
+         
+        main{
+            margin-top: 50px;
+        }
+        
+        #header{
+            text-align: center;
+            color: white;
+            font-size: 45px;
+        }
+        
+        #input-btn-container{
+            text-align: center;
+            border: 5px solid white;
+            background-color: #3b3b4f
+        }
+        
+        #num-head{
+            color: white;
+            font-family: sans-serif;
+            font-size: 25px;
+        }
+        
+        #number{
+            width: 250px;
+            height: 50px;
+            font-size: 25px;
+            font-weight: bold;
+            text-align: center
+        }
+        
+        #convert-btn{
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            width: 250px;
+            height: 50px;
+            font-size: 25px;
+            font-family: sans-serif;
+            font-weight: bold;
+            background: #f1be32;
+            border: 2px orangered;
+        }
+        
+        #output{
+            border: 5px solid white;
+            background-color: #3b3b4f;
+            color: white;
+            height: 80px;
+            margin-top: 30px;
+            font-size: 60px;
+            text-align: center;
+            display: none;
+        }
+      </style>
+  </head>
+  <body>
+      <main>
+        <h1 id="header">ROMAN NUMERAL</h1>
+        <h1 id="header">CONVERTER</h1>
+        <div id="input-btn-container">
+          <h2 id="num-head">Enter a Number:</h2>
+          <input id="number" type="number" value=""/>
+          <button id="convert-btn">Convert</button>
+        </div>
+        <div id="output">
+        </div>
+      </main>
+  </body>
+  <script>
+        const number = document.getElementById("number");
+        const convertBtn = document.getElementById("convert-btn");
+        const output = document.getElementById("output");
+
+        const symbols=[
+        {
+            upper: 3999,
+            value: 1000,
+            sym: "M"
+        },
+        {
+            upper: 999,
+            value: 900,
+            sym: "CM"
+        },
+        {
+            upper: 899,
+            value: 500,
+            sym: "D"
+        },
+        {
+            upper: 499,
+            value: 400,
+            sym: "CD"
+        },
+        {
+            upper: 399,
+            value: 100,
+            sym: "C"
+        },
+        {
+            upper: 99,
+            value: 90,
+            sym: "XC"
+        },
+        {
+            upper: 89,
+            value: 50,
+            sym: "L"
+        },
+        {
+            upper: 49,
+            value: 40,
+            sym: "XL"
+        },
+        {
+            upper: 39,
+            value: 10,
+            sym: "X"
+        },
+        {
+            upper: 9,
+            value: 9,
+            sym: "IX"
+        },
+        {
+            upper: 8,
+            value: 5,
+            sym: "V"
+        },
+        {
+            upper:4,
+            value: 4,
+            sym: "IV"
+        },
+        {
+            upper: 3,
+            value: 1,
+            sym: "I"
+        }
+        ];
+
+        const toRomStr = (symToAddNum, i) => {
+        for(let c = symToAddNum; c > 0; c--){
+            output.style.display = "block";
+            output.style.border = "5px solid white";
+            output.style.backgroundColor = "#3b3b4f";
+            output.style.color = "white";
+            output.style.height = "80px";
+            output.style.marginTop = "30px";
+            output.style.fontSize = "60px";
+            output.style.textAlign = "center";
+            output.style.fontFamily = "Times New Roman";
+            output.innerText += symbols[i].sym;
+            console.log(output.innerText)
+        }
+        };
+
+        const symBlock = (numberInput) => {
+        for(let i = 0; i < symbols.length; i++){
+            if(symbols[i].value <= numberInput && numberInput <= symbols[i].upper){
+            let symToAddNum = Math.floor((numberInput/symbols[i].value));
+            toRomStr(symToAddNum, i);
+            let remVal = numberInput % symbols[i].value;
+            symBlock(remVal);
+            };
+        };
+        };
+
+        const checkUserInput = () => {
+        const numberInput = parseInt(number.value);
+        
+        if(!number.value || isNaN(numberInput)){
+            output.style.display = "block";
+            output.style.color = "#c70d0d";
+            output.style.border = "5px #c70d0d";
+            output.style.fontFamily = "sans-serif";
+            output.style.border = "5px solid #c70d0d";
+            output.style.fontSize = "30px";
+            output.style.paddingTop = "15px";
+            output.style.height = "55px";
+            output.style.backgroundColor = "#f7b0b0";
+            output.innerText = "Please enter a valid number";
+            return;
+        }else if(number.value < 1){
+            output.style.display = "block";
+            output.style.color = "#c70d0d";
+            output.style.border = "5px #c70d0d";
+            output.style.fontFamily = "sans-serif";
+            output.style.border = "5px solid #c70d0d";
+            output.style.fontSize = "30px";
+            output.style.paddingTop = "10px";
+            output.style.height = "80px";
+            output.style.backgroundColor = "#f7b0b0";
+            output.innerText = "Please enter a number greater than or equal to 1";
+            return;
+        }else if(number.value > 3999){
+            output.style.display = "block";
+            output.style.color = "#c70d0d";
+            output.style.border = "5px #c70d0d";
+            output.style.fontFamily = "sans-serif";
+            output.style.border = "5px solid #c70d0d";
+            output.style.fontSize = "30px";
+            output.style.paddingTop = "10px";
+            output.style.height = "80px";
+            output.style.backgroundColor = "#f7b0b0";
+            output.innerText = "Please enter a number less than or equal to 3999";
+            return;
+        }else{
+            output.innerText = "";
+            symBlock(numberInput);
+        };
+        }; 
+
+
+        convertBtn.addEventListener("click", checkUserInput);
+
+        number.addEventListener("keydown", (e) => {
+        if(e.key === "Enter"){
+            checkUserInput();
+        };
+        });
+  </script>
+</html>
